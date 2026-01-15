@@ -26,7 +26,7 @@ jobs:
 
 
       -  name: List the build file
-         run: ls -la build
+         run: ls -la dist
 
       - name: Copy build to EC2 
         uses: appleboy/scp-action@v1
@@ -34,7 +34,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "build/*"
+          source: "dist/*"
           target: "~/react-app"
 
       - name: Serve React app on EC2 using PM2
