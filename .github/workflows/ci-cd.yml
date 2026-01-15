@@ -24,8 +24,8 @@ jobs:
       - name: Build the application
         run: npm run build
 
-      - name: Deploy to EC2 
-        uses: appleboy/scp-action@v0.1.10
+      - name: Copy build  to EC2 
+        uses: appleboy/scp-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -34,7 +34,7 @@ jobs:
           target: "~/react-app"
 
       - name: Serve React app on EC2 using PM2
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
