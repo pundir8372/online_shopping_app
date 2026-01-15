@@ -1,0 +1,42 @@
+name: CI/CD Practice
+
+on:
+  push:
+    branches: [ci-cd-practice]
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu:latest
+
+
+
+        steps:
+            - name: Checkout Code
+              uses: action/checkout@v4
+
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 22
+
+
+            - name: Install Dependencies
+              run: npm install
+
+
+            - name: Build the application
+              run: npm run dev
+              
+              
+
+
+
+
+
+
+
+
+
+
+  
