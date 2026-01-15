@@ -24,7 +24,11 @@ jobs:
       - name: Build the application
         run: npm run build
 
-      - name: Copy build  to EC2 
+
+      -  name: List the build file
+         run: ls -la build
+
+      - name: Copy build to EC2 
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
