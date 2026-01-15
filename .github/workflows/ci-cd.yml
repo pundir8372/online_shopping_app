@@ -18,9 +18,28 @@ jobs:
         with:
           node-version: 22
           
-
       - name: Install Dependencies
         run: npm install
 
       - name: Build the application
         run: npm run build
+
+      - name: Deploy to EC2 
+        uses: appleboy/scp-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "build/*"
+          target: "~/react-app"
+
+      - name: Serve React app on EC2 using PM2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            pm2 stop react-app || true
+            pm2 serve ~/react-app 3000 --name react-app --spa
+            pm2 save
